@@ -1,4 +1,8 @@
 
+devserver_specific:
+  id: 957189934836514816
+  error_channel: 990164935193542696
+
 server_specific:
   id: 962433698857373776  # ID сервера
   trigger_words:
@@ -30,6 +34,17 @@ subplans:
   SC90:
     days: 90
     amount: 81
+
+embed:
+  ErrorEmbed:
+    title: Произошла ошибка
+    description:
+      "
+      Имя ивента: `{event_name}`, UUID случая: `{uuid}`
+      
+      
+      Трасу можно скачать для дальнейшего анализа
+      "
 
 buttons:
   AdminReturnButton:
@@ -150,8 +165,8 @@ forms:
 
   AdminPromoRole:
     embed:
-      title: Выберите присваиваемую роль из списка
-      description: Выбранная вами роль будет присваиваться тем, кто ввел созданные вами промокоды
+      title: Впишите имя присваиваемой роли
+      description: Введенная вами роль будет присваиваться тем, кто ввел созданные вами промокоды
     buttons:
       - custom_id: any-goback
         style: 1
