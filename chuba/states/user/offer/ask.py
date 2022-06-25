@@ -24,7 +24,7 @@ class UserOffer(DiscordMessageState):
     @button(custom_id=UserButtons.OFFER_ACCEPT)
     async def accept_offer(self, ctx: StateContext):
         user_id = ctx.user.id
-        user_model = Chuba.user_db.get_user(user_id)
+        user_model = await Chuba.user_db.get_user(user_id)
         if not user_model:
             await Chuba.user_db.create_user(user_id)
         await ctx.set("UserMenu")
