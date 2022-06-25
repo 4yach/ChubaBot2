@@ -18,6 +18,8 @@ class FixedAiohttpDispatcher(AiohttpDispatcher):
 
     async def process_request(self, request: Request) -> Response:
         await super().process_request(request)
+        # проблема в том, что исходный `process_request` возвращает неверный
+        # ответ {"result": <code>}, когда должен {"code": <code>}
         return json_response({"code": 0})
 
 

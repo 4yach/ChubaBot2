@@ -4,7 +4,7 @@ devserver_specific:
   error_channel: 990164935193542696
 
 server_specific:
-  id: 962433698857373776  # ID сервера
+  id: 962433698857373776
   trigger_words:
     - старт
     - start
@@ -246,10 +246,10 @@ forms:
       -
         - custom_id: admin-give-sub
           style: 1
-          label: Выдать подписку на месяц
+          label: Выдать подписку
         - custom_id: admin-give-vip
           style: 1
-          label: Выдать вип на месяц
+          label: Выдать вип
       -
         - custom_id: admin-drop-sub
           style: 1
@@ -257,6 +257,15 @@ forms:
         - custom_id: admin-drop-vip
           style: 1
           label: Снять вип подписку
+
+  AdminUserInfoDays:
+    embed:
+      title: Введите количество дней
+      description: Введите количество дней, сколько будет действовать подписка
+    buttons:
+      - custom_id: any-goback
+        style: 1
+        label: Выйти в меню
 
   # Сообщение с офертой
   UserOffer:

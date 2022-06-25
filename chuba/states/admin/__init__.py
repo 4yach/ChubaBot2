@@ -9,7 +9,8 @@ from .promo import (
 from .user import (
     AdminUserInfo,
     AdminUserInfoId,
-    AdminUserUnknown
+    AdminUserUnknown,
+    AdminUserInfoDays
 )
 
 __all__ = (
