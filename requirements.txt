@@ -1,4 +1,4 @@
-aiohttp==3.6.0
+aiohttp
 discord~=1.7.3
 dateparser~=1.1.1
 typing~=3.7.4.3
