@@ -1,0 +1,9 @@
+aiohttp==3.8.1
+discord~=1.7.3
+dateparser~=1.1.1
+typing~=3.7.4.3
+aiosqlite~=0.17.0
+python-dateutil~=2.8.2
+aiocloudpayments~=0.0.9
+PyYAML~=6.0
+stackprinter~=0.2.6
