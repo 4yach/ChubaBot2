@@ -35,12 +35,13 @@ class AdminUserInfoId(DiscordMessageState):
             content: str = event.message.content
 
             if content.isdigit():
-                user_model = await Chuba.user_db.get_user(content)
+                user_id = int(content)
+                user_model = await Chuba.user_db.get_user(user_id)
                 if not user_model:
                     await ctx.set("AdminUserUnknown")
                 else:
                     with ctx.data() as data:
-                        data["UserId"] = int(content)
+                        data["UserId"] = user_id
                         data["UserModel"] = user_model
                     await ctx.set("AdminUserInfo")
             else:
