@@ -1,6 +1,9 @@
+# TODO: написать собственный обработчик уведомлений
 
 from aiocloudpayments import AioCpClient, AiohttpDispatcher, Router, Result
-from aiocloudpayments.types.notifications import PayNotification, CheckNotification
+from aiocloudpayments.types.notifications import PayNotification
+
+from aiohttp.web import Request, Response, json_response
 
 from chuba.log import log
 from chuba.bot import Chuba, ChubaBot
@@ -9,7 +12,16 @@ from discord.ext.commands import Cog
 
 
 basic_router = Router()
-basic_dispathcer = AiohttpDispatcher()
+
+
+class FixedAiohttpDispatcher(AiohttpDispatcher):
+
+    async def process_request(self, request: Request) -> Response:
+        await super().process_request(request)
+        return json_response({"code": 0})
+
+
+basic_dispathcer = FixedAiohttpDispatcher()
 
 
 class CloudPaymentsCog(Cog):
