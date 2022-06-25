@@ -30,26 +30,6 @@ class AdminPromoRole(DiscordMessageState):
 
     form = AdminPromoRoleForm()
 
-    async def setup(self, ctx: StateContext) -> None:
-        guild_id: int = Chuba.config.get_value("server_specific", "id")
-        guild: Guild = await Chuba.fetch_guild(guild_id)
-
-        select_layout = [Select(
-            options=[
-                SelectOption(label=r.name, value=r.name) for r in guild.roles
-            ],
-            custom_id=AdminSelects.ADMIN_PROMO_ROLE,
-            placeholder=Chuba.config.get_value("strings", "admin_promo_roles_placeholder")
-        )]
-
-        select_layout.extend(self.form.component_layout)
-
-        await self.show(
-            ctx,
-            embed=self.form.embed,
-            components=select_layout
-        )
-
     @message()
     async def select_role(self, ctx: StateContext):
         guild_id: int = Chuba.config.get_value("server_specific", "id")
