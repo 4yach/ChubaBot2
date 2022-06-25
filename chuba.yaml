@@ -1,6 +1,6 @@
 
 server_specific:
-  id: 957189934836514816  # пока что стоит ID Workaem
+  id: 962433698857373776  # ID сервера
   trigger_words:
     - старт
     - start
@@ -13,9 +13,9 @@ server_specific:
 
 subscriptions:
   SUB:
-    role: 964598680105652234
+    role: 965884142896152587
   VIP:
-    role: 965627803292803072
+    role: 965884492634017793
 
 subplans:
   S30:
