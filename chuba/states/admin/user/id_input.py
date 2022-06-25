@@ -40,7 +40,7 @@ class AdminUserInfoId(DiscordMessageState):
                     await ctx.set("AdminUserUnknown")
                 else:
                     with ctx.data() as data:
-                        data["UserId"] = content
+                        data["UserId"] = int(content)
                         data["UserModel"] = user_model
                     await ctx.set("AdminUserInfo")
             else:
