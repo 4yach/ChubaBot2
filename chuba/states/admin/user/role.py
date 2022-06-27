@@ -33,7 +33,7 @@ class AdminUserPromoRole(DiscordMessageState):
                 promo = data["Promo"]
                 async with Chuba.user_db.user(data["UserId"]) as user_model:
                     user_model.promo = promo
-                Chuba.dispatch("promo_received", promo, event.message.content, ctx.user.id)
+                Chuba.dispatch("promo_received", promo, event.message.content, data["UserId"])
             await ctx.set("AdminUserInfo")
 
     @button(custom_id=AnyUserButtons.ANY_GOBACK)
