@@ -10,7 +10,9 @@ from .user import (
     AdminUserInfo,
     AdminUserInfoId,
     AdminUserUnknown,
-    AdminUserInfoDays
+    AdminUserInfoDays,
+    AdminUserPromoRole,
+    AdminUserPromo
 )
 
 __all__ = (

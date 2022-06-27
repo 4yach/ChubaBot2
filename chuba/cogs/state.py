@@ -36,7 +36,9 @@ from chuba.states.admin import (
     AdminUserInfo,
     AdminUserInfoId,
     AdminUserUnknown,
-    AdminUserInfoDays
+    AdminUserInfoDays,
+    AdminUserPromoRole,
+    AdminUserPromo
 )
 
 
@@ -55,6 +57,8 @@ class StateCog(Cog):
         AdminUserInfoId(),
         AdminUserUnknown(),
         AdminUserInfoDays(),
+        AdminUserPromoRole(),
+        AdminUserPromo(),
 
         UserMenu(),
         UserOffer(),

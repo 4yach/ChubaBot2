@@ -15,6 +15,11 @@ server_specific:
 
   vipsub_days: 30
 
+  vipamount_rub: 2000
+  vipamount_usdt: 27
+
+  donations_alert_channel: 990480829274791976
+
 subscriptions:
   SUB:
     role: 965884142896152587
@@ -36,6 +41,13 @@ subplans:
     amount: 81
 
 embed:
+  DonationEmbed:
+    title: Новый донат!
+    description:
+      "
+      Пользователь {mention} внес пожертвование, в размере {amount} {currency}!
+      "
+
   ErrorEmbed:
     title: Произошла ошибка
     description:
@@ -257,6 +269,13 @@ forms:
         - custom_id: admin-drop-vip
           style: 1
           label: Снять вип подписку
+      -
+        - custom_id: admin-drop-promo
+          style: 1
+          label: Снять промокод
+        - custom_id: admin-give-promo
+          style: 1
+          label: Выдать промокод
 
   AdminUserInfoDays:
     embed:
@@ -264,6 +283,24 @@ forms:
       description: Введите количество дней, сколько будет действовать подписка
     buttons:
       - custom_id: any-goback
+        style: 1
+        label: Выйти в меню
+
+  AdminUserPromo:
+    embed:
+      title: Введите именной промокод
+      description: Введите любую строку, которая будет отображаться в профиле пользователя
+    buttons:
+      - custom_id: any_goback
+        style: 1
+        label: Выйти в меню
+
+  AdminUserPromoRole:
+    embed:
+      title: Введите выдаваему роль
+      description: Введите роль, которая будет выдана именным промокодом
+    buttons:
+      - custom_id: any_goback
         style: 1
         label: Выйти в меню
 

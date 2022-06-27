@@ -63,7 +63,7 @@ class AnyMoneyView(DiscordMessageState):
             # ждем, когда пользователь оплатит подписку
             await Chuba.wait_for(
                 "subscription_payed",
-                check=lambda s, d, ui: ui == ctx.user.id)
+                check=lambda s, d, ui, a, c: ui == ctx.user.id)
 
             await message.edit(**self.success_form.to_send())
 
@@ -76,12 +76,14 @@ class AnyMoneyView(DiscordMessageState):
                 status = payload["result"]["status"]
                 if status == "done":
                     await event.interaction.respond(
-                        content=f"Платеж прошел, данное сообщение можно скрыть")
+                        content="Платеж прошел, данное сообщение можно скрыть")
                     Chuba.dispatch(
                         "subscription_payed",
                         data["Subscription"],
                         data["Days"],
-                        ctx.user.id
+                        ctx.user.id,
+                        payload["result"]["in_amount"],
+                        data["Currency"]
                     )
                 else:
                     await event.interaction.respond(

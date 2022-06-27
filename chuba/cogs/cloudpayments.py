@@ -6,7 +6,7 @@ from aiocloudpayments.types.notifications import PayNotification
 from aiohttp.web import Request, Response, json_response
 
 from chuba.log import log
-from chuba.bot import Chuba, ChubaBot
+from chuba.bot import ChubaBot
 from chuba.utils import ipv4net
 from discord.ext.commands import Cog
 
@@ -43,7 +43,9 @@ class CloudPaymentsCog(Cog):
             "subscription_payed",
             sub,
             int(days),
-            int(notification.account_id))
+            int(notification.account_id),
+            notification.amount,
+            "RUB")
 
         return Result.OK
 

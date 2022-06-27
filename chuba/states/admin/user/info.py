@@ -77,3 +77,13 @@ class AdminUserInfo(DiscordMessageState):
         with ctx.data() as data:
             Chuba.dispatch("subscription_declined", "VIP", data["UserId"])
         await ctx.set("AdminUserInfo")
+
+    @button(custom_id=AdminButtons.ADMIN_DROP_PROMO)
+    async def drop_promo(self, ctx: StateContext):
+        with ctx.data() as data:
+            Chuba.dispatch("promo_declined", data["UserId"])
+        await ctx.set("AdminUserInfo")
+
+    @button(custom_id=AdminButtons.ADMIN_GIVE_PROMO)
+    async def give_promo(self, ctx: StateContext):
+        await ctx.set("AdminUserPromo")

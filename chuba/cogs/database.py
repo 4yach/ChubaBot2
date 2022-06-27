@@ -28,13 +28,21 @@ class DatabaseCog(Cog):
         self.check_expiried_vipsubscriptions.start()
 
     @Cog.listener()
-    async def on_subscription_payed(self, subscription, days, user_id):
+    async def on_promo_declined(self, user_id: int):
+        async with self.db.user(user_id) as user_model:
+            user_model.promo = None
+        log.info(f"Отменен промокод для пользователя {user_id}")
+
+    @Cog.listener()
+    async def on_subscription_payed(self, subscription, days, user_id, amount, currency):
         async with self.db.user(user_id) as user_model:
             match subscription:
                 case "SUB":
                     user_model.subscription = (user_model.subscription or date.today()) + timedelta(days=days)
                 case "VIP":
                     user_model.vip_subscription = (user_model.vip_subscription or date.today()) + timedelta(days=days)
+
+            log.info(f"{user_id} оплатил/получил подписку {subscription} на {days} дней в размере {amount} {currency}")
 
     @Cog.listener()
     async def on_subscription_declined(self, subscription, user_id):
@@ -44,6 +52,8 @@ class DatabaseCog(Cog):
                     user_model.subscription = None
                 case "VIP":
                     user_model.vip_subscription = None
+
+            log.info(f"Отменена подписка {subscription} для {user_id}")
 
     @loop(hours=24)
     async def check_expiried_subscriptions(self):

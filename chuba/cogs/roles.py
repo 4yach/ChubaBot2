@@ -24,11 +24,10 @@ class RolesCog(Cog):
         role = find(lambda r: r.name == role_name, guild.roles)
         if role:
             await member.add_roles(role)
-
-        log.info(f"Выдана роль {role.name} пользвателю {user_id} ({member.display_name})")
+            log.info(f"Выдана роль {role.name} пользвателю {user_id} ({member.display_name})")
 
     @Cog.listener()
-    async def on_subscription_payed(self, sub: str, _days: int, user_id: int):
+    async def on_subscription_payed(self, sub: str, _days: int, user_id: int, _amount: float, _currency: str):
         guild_id: int = self.bot.config.get_value("server_specific", "id")
         received_role_data: dict = self.bot.config.get_value("subscriptions", sub)
         received_role_id: int = received_role_data["role"]
@@ -39,8 +38,7 @@ class RolesCog(Cog):
         role = find(lambda r: r.id == received_role_id, guild.roles)
         if role:
             await member.add_roles(role)
-
-        log.info(f"Выдана роль {role.name} пользвателю {user_id} ({member.display_name})")
+            log.info(f"Выдана роль {role.name} пользвателю {user_id} ({member.display_name})")
 
     @Cog.listener()
     async def on_subscription_declined(self, sub: str, user_id: int):
@@ -54,5 +52,4 @@ class RolesCog(Cog):
         role = find(lambda r: r.id == received_role_id, guild.roles)
         if role:
             await member.remove_roles(role)
-
-        log.info(f"Убрана роль {role.name} пользвателю {user_id} ({member.display_name})")
+            log.info(f"Убрана роль {role.name} пользвателю {user_id} ({member.display_name})")

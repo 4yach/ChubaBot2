@@ -11,31 +11,28 @@ from chuba.state import (
 from chuba.buttons import AnyUserButtons
 
 
-class AdminUserInfoDaysForm(DiscordMessageStateForm):
+class AdminUserPromoForm(DiscordMessageStateForm):
 
     @property
     def data(self) -> dict:
-        return Chuba.config.get_value("forms", "AdminUserInfoDays")
+        return Chuba.config.get_value("forms", "AdminUserPromo")
 
 
-class AdminUserInfoDays(DiscordMessageState):
+class AdminUserPromo(DiscordMessageState):
 
-    """Ввод количества промокодов
+    """Ввод именного промокода
     """
 
-    form = AdminUserInfoDaysForm()
+    form = AdminUserPromoForm()
 
     @message()
     async def handle_user_id(self, ctx: StateContext):
         event = ctx.event
 
         if isinstance(event, MessageEvent):
-            content: str = event.message.content
-
-            if content.isdigit():
-                with ctx.data() as data:
-                    Chuba.dispatch("subscription_payed", data["Sub"], int(content), data["UserId"], -1, "UNKNOWN")
-                await ctx.set("AdminUserInfo")
+            with ctx.data() as data:
+                data["Promo"] = event.message.content
+            await ctx.set("AdminUserPromoRole")
 
     @button(custom_id=AnyUserButtons.ANY_GOBACK)
     async def go_back(self, ctx: StateContext):

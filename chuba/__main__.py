@@ -18,7 +18,8 @@ from chuba.cogs import (
     WebhookCog,
     AnyMoneyCog,
     CloudPaymentsCog,
-    WebhookStarterCog)
+    WebhookStarterCog,
+    DonationsAlertCog)
 
 _DEFAULT_PROMOS_PATH: str = "chuba_promos/"
 _DEFAULT_CONFIG_PATH: str = "chuba.yaml"
@@ -112,5 +113,6 @@ if __name__ == '__main__':
     Chuba.add_cog(CloudPaymentsCog(Chuba, namespace.cp_public_id, namespace.cp_api_secret))
     Chuba.add_cog(RolesCog(Chuba))
     Chuba.add_cog(WebhookStarterCog(Chuba, namespace.webhook_ip, namespace.webhook_port))
+    Chuba.add_cog(DonationsAlertCog(Chuba))
 
     Chuba.run(namespace.token)

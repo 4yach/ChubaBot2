@@ -15,5 +15,7 @@ class AdminButtons:
 
     ADMIN_GIVE_SUB = "admin-give-sub"
     ADMIN_GIVE_VIP = "admin-give-vip"
+    ADMIN_GIVE_PROMO = "admin-give-promo"
     ADMIN_DROP_SUB = "admin-drop-sub"
     ADMIN_DROP_VIP = "admin-drop-vip"
+    ADMIN_DROP_PROMO = "admin-drop-promo"

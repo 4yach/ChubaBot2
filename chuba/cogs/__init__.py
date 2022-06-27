@@ -11,6 +11,7 @@ from chuba.cogs.database import DatabaseCog
 from chuba.cogs.webhook import WebhookCog, WebhookStarterCog
 from chuba.cogs.anymoney import AnyMoneyCog
 from chuba.cogs.cloudpayments import CloudPaymentsCog
+from chuba.cogs.donations_alert import DonationsAlertCog
 
 __all__ = (
     "ConfigCog",
@@ -22,5 +23,6 @@ __all__ = (
     "DatabaseCog",
     "WebhookCog",
     "CloudPaymentsCog",
-    "WebhookStarterCog"
+    "WebhookStarterCog",
+    "DonationsAlertCog"
 )

@@ -73,7 +73,7 @@ class CloudPaymentsView(DiscordMessageState):
             # ждем, когда пользователь оплатит подписку
             await Chuba.wait_for(
                 "subscription_payed",
-                check=lambda s, d, ui: ui == ctx.user.id)
+                check=lambda s, d, ui, a, c: ui == ctx.user.id)
 
             await message.edit(**self.success_form.to_send())
 

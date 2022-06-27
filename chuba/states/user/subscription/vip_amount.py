@@ -30,9 +30,25 @@ class InputVipAmount(DiscordMessageState):
 
         if isinstance(event, MessageEvent):
             with ctx.data() as data:
-                data["Days"] = Chuba.config.get_value("server_specific", "vipsub_days")
-                data["Amount"] = event.message.content
-            await ctx.set("PaymentConfirm")
+                text: str = event.message.content
+
+                if text.isdigit():
+                    value: int = int(text)
+                    min_value: int = 0
+                    currency: str = data["Currency"]
+
+                    match currency:
+                        case "RUB":
+                            min_value = Chuba.config.get_value("server_specific", "vipamount_rub")
+                        case "USDT":
+                            min_value = Chuba.config.get_value("server_specific", "vipamount_usdt")
+
+                    if value >= min_value:
+                        data["Days"] = Chuba.config.get_value("server_specific", "vipsub_days")
+                        data["Amount"] = event.message.content
+                        await ctx.set("PaymentConfirm")
+                    else:
+                        await event.message.reply(f"Введите значение, большее {min_value}")
 
     @button(custom_id=AnyUserButtons.ANY_GOBACK)
     async def go_back(self, ctx: StateContext):
