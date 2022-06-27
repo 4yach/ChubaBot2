@@ -35,10 +35,10 @@ subplans:
     amount: 7500
   SC30:
     days: 30
-    amount: 27
+    amount: 41
   SC90:
     days: 90
-    amount: 81
+    amount: 123
 
 embed:
   DonationEmbed:
@@ -557,10 +557,10 @@ forms:
       custom_id: "user-plan-select-crypto"
       placeholder: Планы в криптовалюте
       options:
-        - label: Подписка на месяц, 27$
+        - label: Подписка на месяц, 41$
           value: SC30
           description: Подписка действует 30 дней (1 месяц)
-        - label: Подписка на три месяца, 81$
+        - label: Подписка на три месяца, 123$
           value: SC90
           description: Подписка действует 90 дней (3 месяца)
     buttons:
