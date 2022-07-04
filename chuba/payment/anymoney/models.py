@@ -47,7 +47,7 @@ class CallbackModel(AnyMoneyModel):
     """Валюта зачисления
     """
 
-    payway_name: str
+    payway_name: str | None = None
     """Наименование платежной среды
     """
 

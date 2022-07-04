@@ -49,7 +49,8 @@ class AnyMoneyView(DiscordMessageState):
                 invoice_id=f"{ctx.user.id}-{data['Subscription']}-{data['Days']}-{randseq7()}",
                 amount=str(data["Amount"]),
                 currency=data["Currency"],
-                lifetime="1d"
+                lifetime="1d",
+                callback="http://vm-db53201b.na4u.ru:32822/anymoney/pay"
             )
 
             # отображаем новый эмбед пользователю с готовой для оплаты ссылкой

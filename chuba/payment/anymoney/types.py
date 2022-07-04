@@ -97,6 +97,7 @@ class AnyMoney(PaymentBase):
                 "amount": kwargs.pop("amount"),
                 "in_curr": kwargs.pop("currency"),
                 "lifetime": kwargs.pop("lifetime"),
+                "callback_url": kwargs.pop("callback"),
                 "is_multipay": True
             }
         )
