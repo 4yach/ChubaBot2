@@ -8,3 +8,4 @@ aiocloudpayments~=0.0.9
 PyYAML~=6.0
 stackprinter~=0.2.6
 pydantic~=1.9.1
+discord-components==2.1.2
