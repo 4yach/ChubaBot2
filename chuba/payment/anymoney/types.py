@@ -29,6 +29,8 @@ class AnyMoney(PaymentBase):
 
     _handler = None
 
+    callback_url: str | None = None
+
     endpoint: str = Endpoints.ANY_MONEY
 
     def __init__(self, api_key, merchant):
@@ -97,7 +99,7 @@ class AnyMoney(PaymentBase):
                 "amount": kwargs.pop("amount"),
                 "in_curr": kwargs.pop("currency"),
                 "lifetime": kwargs.pop("lifetime"),
-                "callback_url": kwargs.pop("callback"),
+                "callback_url": self.callback_url,
                 "is_multipay": True
             }
         )

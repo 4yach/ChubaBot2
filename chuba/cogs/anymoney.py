@@ -9,11 +9,12 @@ from chuba.payment.anymoney import AnyMoney, AnyMoneySetup, CallbackModel
 
 class AnyMoneyCog(Cog):
 
-    def __init__(self, bot: ChubaBot, api_key: str, merchant_id: int):
+    def __init__(self, bot: ChubaBot, api_key: str, merchant_id: int, callback_url: str):
         self.bot = bot
         self.loop = bot.loop
         self.api_key = api_key
         self.merchant_id = merchant_id
+        self.callback_url = callback_url
 
     async def handle_payment(self, model: CallbackModel):
         if model.status == "done":
@@ -30,6 +31,8 @@ class AnyMoneyCog(Cog):
         log.info("Инициализация Any Money")
 
         am = self.bot.am_client = AnyMoney(self.api_key, self.merchant_id)
+
+        am.callback_url = self.callback_url
 
         await am.setup_notifier(self.bot.webhook, AnyMoneySetup(
             "/anymoney/pay",

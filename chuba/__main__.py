@@ -78,6 +78,13 @@ arg_parser.add_argument(
     required=False)
 
 arg_parser.add_argument(
+    "--am-callback-url",
+    dest="am_callback_url",
+    help="URL колбэк",
+    required=False
+)
+
+arg_parser.add_argument(
     "--webhook-ip",
     dest="webhook_ip",
     help="IP вебхука",
@@ -110,7 +117,7 @@ if __name__ == '__main__':
     Chuba.add_cog(StartCog(Chuba))
     Chuba.add_cog(EventCog(Chuba))
     Chuba.add_cog(WebhookCog(Chuba))
-    Chuba.add_cog(AnyMoneyCog(Chuba, namespace.am_api_key, namespace.am_merchant_id))
+    Chuba.add_cog(AnyMoneyCog(Chuba, namespace.am_api_key, namespace.am_merchant_id, namespace.am_callback_url))
     Chuba.add_cog(CloudPaymentsCog(Chuba, namespace.cp_public_id, namespace.cp_api_secret))
     Chuba.add_cog(RolesCog(Chuba))
     Chuba.add_cog(WebhookStarterCog(Chuba, namespace.webhook_ip, namespace.webhook_port))
