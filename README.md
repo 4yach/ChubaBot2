@@ -3,7 +3,7 @@
   <img src="https://github.com/4yach/ChubaBot2/blob/master/assets/chuba_intro.png?raw=true"/>
 </p>
 
-# ChubaBot 2.0.0
+# ChubaBot 2.1.0
 Дискорд бот для **закрытой** гильдии Глеба Корнилова
 
 ## Основные задачи бота
