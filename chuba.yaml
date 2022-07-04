@@ -16,7 +16,7 @@ server_specific:
   vipsub_days: 30
 
   vipamount_rub: 2000
-  vipamount_usdt: 27
+  vipamount_usdt: 35
 
   donations_alert_channel: 990480829274791976
 
@@ -35,10 +35,10 @@ subplans:
     amount: 7500
   SC30:
     days: 30
-    amount: 41
+    amount: 43
   SC90:
     days: 90
-    amount: 123
+    amount: 129
 
 embed:
   DonationEmbed:
