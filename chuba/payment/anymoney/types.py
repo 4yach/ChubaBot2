@@ -1,23 +1,33 @@
 
-from time import time
+from typing import Callable
 
-from hmac import (
-    new as hmac_new,
-    HMAC)
-
+from hmac import (new as hmac_new, HMAC)
 from hashlib import sha512
-
 from aiohttp import ClientSession
+from inspect import iscoroutinefunction
+from dataclasses import dataclass
+
+from aiohttp.web import Application, Request, Response, post
 
 from chuba.utils import utcnow_ms
-from chuba.payment.types import PaymentBase
+from chuba.payment.types import PaymentBase, SetupNotifierContext
 from chuba.payment.endpoints import Endpoints
+
+from .models import CallbackModel
+
+
+@dataclass
+class AnyMoneySetup(SetupNotifierContext):
+    path: str
+    handler: Callable
 
 
 class AnyMoney(PaymentBase):
     """
     Класс с полезными методами для работы с API сервиса Any.Money
     """
+
+    _handler = None
 
     endpoint: str = Endpoints.ANY_MONEY
 
@@ -76,11 +86,8 @@ class AnyMoney(PaymentBase):
         """
         Создать инвойс (ордер) для оплаты в определенной валюте и
         до определенного срока.
-        :param str invoice_id: уникальный номер мерчанта
-        :param str currency: валюта, в которой будет произведена оплата
-        :param str amount: счет, например 3002,10
-        :params str email: почта клиента, куда придет оповещение об операции
-        :param str lifetime: время активности ордера
+        :param str invoice_id: уникальный номер мерчанта,
+        :params str email: почта клиента, куда придет оповещение об операции,
         :return dict: ответ сервера
         """
         return await self.call_method(
@@ -94,20 +101,17 @@ class AnyMoney(PaymentBase):
             }
         )
 
-    async def check(self, merchant_id: str) -> dict:
-        """
-        Получать данные ордера по его идентификатору.
-        :param: str external_id: уникальный идентификатор ордера, заданный мерчантом
-        :return dict: ответ сервера
-        """
-        return await self.call_method(
-            "status",
-            {
-                "externalid": merchant_id
-            })
-
     async def cancel(self, *args) -> dict:
         """
         Не реализован
         """
         return {}
+
+    async def setup_notifier(self, webhook: Application, ctx: AnyMoneySetup):
+        self._handler = ctx.handler
+        webhook.add_routes([post(ctx.path, self._pre_handle_request)])
+
+    async def _pre_handle_request(self, request: Request):
+        if self._handler and iscoroutinefunction(self._handler):
+            await self._handler(CallbackModel(**(await request.json())))
+        return Response(status=200)

@@ -57,7 +57,8 @@ class UserMenuProfile(DiscordMessageState):
             promo=user_model.promo or nothing,
             subscription=user_model.subscription or nothing,
             vip_subscription=user_model.vip_subscription or nothing,
-            last_payment=user_model.last_payment_id or nothing
+            last_payment=user_model.last_payment_id or nothing,
+            subscription_id=user_model.subscription_id or nothing
         )
         embed.set_thumbnail(url=str(user.avatar_url))
 
@@ -77,10 +78,22 @@ class UserMenuProfile(DiscordMessageState):
 
     @button(custom_id=UserButtons.USER_DISCARD_SUBSCRIPTION)
     async def discard_subscription(self, ctx: StateContext):
-        Chuba.dispatch("subscription_declined", "SUB", ctx.user.id)
+        Chuba.dispatch("subscription_declined", ctx.user.id, "SUB")
         await ctx.set("UserMenuProfile")
 
     @button(custom_id=UserButtons.USER_DISCARD_VIP)
     async def discard_vip(self, ctx: StateContext):
-        Chuba.dispatch("subscription_declined", "VIP", ctx.user.id)
+        Chuba.dispatch("subscription_declined", ctx.user.id, "VIP")
+        await ctx.set("UserMenuProfile")
+
+    @button(custom_id=UserButtons.USER_DISCARD_RECURRENT)
+    async def discard_recurrent(self, ctx: StateContext):
+        user_id = ctx.user.id
+        user_model: UserModel = await Chuba.user_db.get_user(user_id)
+
+        Chuba.dispatch(
+            "recurrent_declined",
+            user_id,
+            user_model.subscription_id)
+
         await ctx.set("UserMenuProfile")

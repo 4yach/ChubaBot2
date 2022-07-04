@@ -18,8 +18,12 @@ class UserButtons:
     USER_PAYMENT_CONFIRM = "user-payment-confirm"
     USER_PAYMENT_REFUSE = "user-payment-refuse"
 
+    USER_RECURRENT_CONFIRM = "user-recurrent-confirm"
+    USER_RECURRENT_REFUSE = "user-recurrent-refuse"
+
     USER_PAYMENT_CANCEL = "user-payment-cancel"
     USER_PAYMENT_CHECK = "user-payment-check"
 
     USER_DISCARD_SUBSCRIPTION = "user-discard-subscription"
     USER_DISCARD_VIP = "user-discard-vip"
+    USER_DISCARD_RECURRENT = "user-discard-recurrent"

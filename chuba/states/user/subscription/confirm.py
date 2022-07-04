@@ -1,11 +1,8 @@
 
 from chuba.bot import Chuba
 
-from chuba.utils import randseq7
-
 from chuba.state import (
     button,
-    MessageEvent,
     StateContext,
     DiscordMessageState,
     DiscordMessageStateForm)
@@ -27,11 +24,10 @@ class PaymentConfirm(DiscordMessageState):
     @button(custom_id=UserButtons.USER_PAYMENT_CONFIRM)
     async def payment_confirm(self, ctx: StateContext):
         with ctx.data() as data:
-            data["InvoiceId"] = f"{data['Subscription']}-{data['Days']}-{randseq7()}"
             currency = data["Currency"]
             match currency:
                 case "RUB":
-                    await ctx.set("CloudPaymentsView")
+                    await ctx.set("PaymentRecurrent")
                 case "USDT":
                     await ctx.set("AnyMoneyView")
 

@@ -69,13 +69,13 @@ class AdminUserInfo(DiscordMessageState):
     @button(custom_id=AdminButtons.ADMIN_DROP_SUB)
     async def drop_sub(self, ctx: StateContext):
         with ctx.data() as data:
-            Chuba.dispatch("subscription_declined", "SUB", data["UserId"])
+            Chuba.dispatch("subscription_declined", data["UserId"], "SUB")
         await ctx.set("AdminUserInfo")
 
     @button(custom_id=AdminButtons.ADMIN_DROP_VIP)
     async def drop_vip(self, ctx: StateContext):
         with ctx.data() as data:
-            Chuba.dispatch("subscription_declined", "VIP", data["UserId"])
+            Chuba.dispatch("subscription_declined", data["UserId"], "VIP")
         await ctx.set("AdminUserInfo")
 
     @button(custom_id=AdminButtons.ADMIN_DROP_PROMO)

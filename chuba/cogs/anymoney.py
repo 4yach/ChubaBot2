@@ -4,7 +4,7 @@ from chuba.bot import Chuba, ChubaBot
 from chuba.utils import ipv4net
 from discord.ext.commands import Cog
 
-from chuba.payment.anymoney import AnyMoney
+from chuba.payment.anymoney import AnyMoney, AnyMoneySetup, CallbackModel
 
 
 class AnyMoneyCog(Cog):
@@ -15,8 +15,23 @@ class AnyMoneyCog(Cog):
         self.api_key = api_key
         self.merchant_id = merchant_id
 
+    async def handle_payment(self, model: CallbackModel):
+        if model.status == "done":
+            user_id, invoice_id = model.externalid.split("-", 1)
+            self.bot.dispatch(
+                "payment_received",
+                model.in_amount,
+                model.in_curr,
+                int(user_id),
+                invoice_id)
+
     @Cog.listener()
     async def on_ready(self):
         log.info("Инициализация Any Money")
 
-        self.bot.am_client = AnyMoney(self.api_key, self.merchant_id)
+        am = self.bot.am_client = AnyMoney(self.api_key, self.merchant_id)
+
+        await am.setup_notifier(self.bot.webhook, AnyMoneySetup(
+            "/anymoney/pay",
+            self.handle_payment
+        ))

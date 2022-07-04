@@ -6,6 +6,7 @@ from chuba.cogs.state import StateCog
 from chuba.cogs.start import StartCog
 from chuba.cogs.promo import PromoCog
 from chuba.cogs.roles import RolesCog
+from chuba.cogs.payment import PaymentCog
 from chuba.cogs.dcsetup import DCSetupCog
 from chuba.cogs.database import DatabaseCog
 from chuba.cogs.webhook import WebhookCog, WebhookStarterCog

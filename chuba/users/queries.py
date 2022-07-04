@@ -5,7 +5,8 @@ CREATE TABLE if not EXISTS users (
     promo TEXT UNIQUE DEFAULT NULL,
     subscription DATE DEFAULT NULL,
     vipsubscription DATE DEFAULT NULL,
-    last_payment_id TEXT DEFAULT NULL
+    last_payment_id TEXT DEFAULT NULL,
+    subscription_id TEXT DEFAULT NULL
 )
 """
 
@@ -24,7 +25,8 @@ UPDATE users
         promo = ?,
         subscription = ?,
         vipsubscription = ?,
-        last_payment_id = ?
+        last_payment_id = ?,
+        subscription_id = ?
     WHERE id = ?
 """
 

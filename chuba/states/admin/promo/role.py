@@ -1,7 +1,6 @@
 
 
 from discord import Guild
-from discord_components import Select, SelectOption
 
 from chuba.bot import Chuba
 
@@ -13,7 +12,6 @@ from chuba.state import (
     DiscordMessageState,
     DiscordMessageStateForm)
 
-from chuba.selects import AdminSelects
 from chuba.buttons import AnyUserButtons
 
 from discord.utils import find

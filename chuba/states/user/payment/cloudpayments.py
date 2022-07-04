@@ -1,6 +1,4 @@
 
-from discord import Embed
-
 from chuba.bot import Chuba
 
 from chuba.utils import randseq7
@@ -49,17 +47,18 @@ class CloudPaymentsView(DiscordMessageState):
         with ctx.data() as data:
             # создаем ордер на оплату и получаем его ID для возможности
             # отменить платеж, по нажатию на кнопку
-            order = await Chuba.cp_client.create_order(
+            order = await Chuba.cp_client.create(
+                invoice_id=f"{data['Subscription']}-{data['Days']}-{randseq7()}",
                 amount=data["Amount"],
                 currency=data["Currency"],
-                description="Оплата подписки",
-                invoice_id=data["InvoiceId"],
-                account_id=ctx.user.id,
-                require_confirmation=False,
                 send_sms=False,
                 send_email=False,
                 send_viber=False,
-                success_redirect_url=message.jump_url
+                account_id=ctx.user.id,
+                description="Оплата подписки",
+                require_confirmation=False,
+                success_redirect_url=message.jump_url,
+                subscription_behavior=data.get("Reccurent")
             )
             data["OrderId"] = order.id
 
@@ -72,8 +71,8 @@ class CloudPaymentsView(DiscordMessageState):
 
             # ждем, когда пользователь оплатит подписку
             await Chuba.wait_for(
-                "subscription_payed",
-                check=lambda s, d, ui, a, c: ui == ctx.user.id)
+                "payment_received",
+                check=lambda am, curr, usid, inid: usid == ctx.user.id)
 
             await message.edit(**self.success_form.to_send())
 
@@ -84,5 +83,5 @@ class CloudPaymentsView(DiscordMessageState):
     @button(custom_id=UserButtons.USER_PAYMENT_CANCEL)
     async def payment_cancel(self, ctx: StateContext):
         with ctx.data() as data:
-            await Chuba.cp_client.cancel_order(id=data["OrderId"])
+            await Chuba.cp_client.cancel(invoice_id=data["OrderId"])
         await ctx.set("UserMenu")

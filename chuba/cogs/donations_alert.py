@@ -12,9 +12,9 @@ class DonationsAlertCog(Cog):
         self.bot: Bot = bot
 
     @Cog.listener()
-    async def on_subscription_payed(self, subscription, _days, user_id, amount, currency):
+    async def on_payment_received(self, amount, curr, user_id, invoice_id):
 
-        if subscription == "VIP" and amount != -1:
+        if "VIP" in invoice_id:
             embed: Embed = Embed.from_dict(
                 Chuba.config.get_value("embed", "DonationEmbed"))
 
@@ -24,6 +24,6 @@ class DonationsAlertCog(Cog):
             embed.description = embed.description.format(
                 amount=amount,
                 mention=f"<@{user_id}>",
-                currency=currency)
+                currency=curr)
 
             await channel.send(embed=embed)

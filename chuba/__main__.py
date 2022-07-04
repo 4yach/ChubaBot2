@@ -13,6 +13,7 @@ from chuba.cogs import (
     StartCog,
     PromoCog,
     RolesCog,
+    PaymentCog,
     DCSetupCog,
     DatabaseCog,
     WebhookCog,
@@ -113,6 +114,7 @@ if __name__ == '__main__':
     Chuba.add_cog(CloudPaymentsCog(Chuba, namespace.cp_public_id, namespace.cp_api_secret))
     Chuba.add_cog(RolesCog(Chuba))
     Chuba.add_cog(WebhookStarterCog(Chuba, namespace.webhook_ip, namespace.webhook_port))
+    Chuba.add_cog(PaymentCog(Chuba))
     Chuba.add_cog(DonationsAlertCog(Chuba))
 
     Chuba.run(namespace.token)

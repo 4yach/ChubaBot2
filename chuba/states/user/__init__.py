@@ -9,7 +9,8 @@ from .subscription import (
     SelectSubscription,
     SelectSubscriptionPlan,
     InputVipAmount,
-    PaymentConfirm
+    PaymentConfirm,
+    PaymentRecurrent
 )
 
 __all__ = (

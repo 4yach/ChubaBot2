@@ -1,16 +1,15 @@
 
-from aiocloudpayments import AioCpClient
-
 from chuba.bot import Chuba
+
+from chuba.utils import randseq7
 
 from chuba.state import (
     button,
-    ButtonEvent,
     StateContext,
     DiscordMessageState,
     DiscordMessageStateForm)
 
-from chuba.buttons import UserButtons
+from chuba.buttons import UserButtons, AnyUserButtons
 
 
 class AnyMoneyWaitingViewForm(DiscordMessageStateForm):
@@ -47,7 +46,7 @@ class AnyMoneyView(DiscordMessageState):
             # создаем ордер на оплату и получаем его ID для возможности
             # отменить платеж, по нажатию на кнопку
             order = await Chuba.am_client.create(
-                invoice_id=data["InvoiceId"],
+                invoice_id=f"{ctx.user.id}-{data['Subscription']}-{data['Days']}-{randseq7()}",
                 amount=str(data["Amount"]),
                 currency=data["Currency"],
                 lifetime="1d"
@@ -62,33 +61,15 @@ class AnyMoneyView(DiscordMessageState):
 
             # ждем, когда пользователь оплатит подписку
             await Chuba.wait_for(
-                "subscription_payed",
-                check=lambda s, d, ui, a, c: ui == ctx.user.id)
+                "payment_received",
+                check=lambda am, curr, usid, inid: usid == ctx.user.id)
 
             await message.edit(**self.success_form.to_send())
 
-    @button(custom_id=UserButtons.USER_PAYMENT_CHECK)
-    async def check_payment(self, ctx: StateContext):
-        event = ctx.event
-        with ctx.data() as data:
-            payload = await Chuba.am_client.check(data["InvoiceId"])
-            if isinstance(event, ButtonEvent):
-                status = payload["result"]["status"]
-                if status == "done":
-                    await event.interaction.respond(
-                        content="Платеж прошел, данное сообщение можно скрыть")
-                    Chuba.dispatch(
-                        "subscription_payed",
-                        data["Subscription"],
-                        data["Days"],
-                        ctx.user.id,
-                        payload["result"]["in_amount"],
-                        data["Currency"]
-                    )
-                else:
-                    await event.interaction.respond(
-                        content=f"Платеж еще не прошел, статус {status}. Данное сообщение можно скрыть.")
-
     @button(custom_id=UserButtons.USER_PAYMENT_CANCEL)
     async def payment_cancel(self, ctx: StateContext):
+        await ctx.set("UserMenu")
+
+    @button(custom_id=AnyUserButtons.ANY_GOBACK)
+    async def go_back(self, ctx: StateContext):
         await ctx.set("UserMenu")

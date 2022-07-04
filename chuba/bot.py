@@ -2,7 +2,6 @@
 from sys import exc_info
 from uuid import uuid4
 from discord import Intents
-from aiocloudpayments import AioCpClient
 
 from aiohttp.web import Application
 
@@ -12,6 +11,7 @@ from chuba.users import UsersDatabase
 from chuba.config import Configuration
 
 from chuba.payment.anymoney import AnyMoney
+from chuba.payment.cloudpayments import CloudPayments
 
 from discord.ext.commands import Bot
 
@@ -30,7 +30,7 @@ class ChubaBot(Bot):
 
     am_client: AnyMoney
 
-    cp_client: AioCpClient
+    cp_client: CloudPayments
 
     state_machine: StateMachine
     """Ссылка на объект текущей машины состояний

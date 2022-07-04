@@ -34,7 +34,7 @@ class AdminUserInfoDays(DiscordMessageState):
 
             if content.isdigit():
                 with ctx.data() as data:
-                    Chuba.dispatch("subscription_payed", data["Sub"], int(content), data["UserId"], -1, "UNKNOWN")
+                    Chuba.dispatch("subscription_added", data["UserId"], data["Sub"], int(content))
                 await ctx.set("AdminUserInfo")
 
     @button(custom_id=AnyUserButtons.ANY_GOBACK)

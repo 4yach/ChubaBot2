@@ -20,6 +20,7 @@ from chuba.states.user import (
     SelectSubscriptionPlan,
     InputVipAmount,
     PaymentConfirm,
+    PaymentRecurrent,
 
     AnyMoneyView,
     CloudPaymentsView
@@ -73,19 +74,20 @@ class StateCog(Cog):
         SelectSubscriptionPlan(),
         InputVipAmount(),
         PaymentConfirm(),
+        PaymentRecurrent(),
 
         AnyMoneyView(),
         CloudPaymentsView()
     )
 
     def __init__(self, bot: ChubaBot):
-        self._bot = bot
+        self.bot = bot
 
     @Cog.listener()
     async def on_ready(self):
         log.info("Инициализация Машины состояний и загрузка состояний")
 
-        _state_machine = self._bot.state_machine = StateMachine()
+        state_machine = self.bot.state_machine = StateMachine()
 
         for state in self._states:
-            _state_machine.register(state)
+            state_machine.register(state)

@@ -27,7 +27,7 @@ class RolesCog(Cog):
             log.info(f"Выдана роль {role.name} пользвателю {user_id} ({member.display_name})")
 
     @Cog.listener()
-    async def on_subscription_payed(self, sub: str, _days: int, user_id: int, _amount: float, _currency: str):
+    async def on_subscription_added(self, user_id: int, sub: str, _days: int):
         guild_id: int = self.bot.config.get_value("server_specific", "id")
         received_role_data: dict = self.bot.config.get_value("subscriptions", sub)
         received_role_id: int = received_role_data["role"]
@@ -41,7 +41,7 @@ class RolesCog(Cog):
             log.info(f"Выдана роль {role.name} пользвателю {user_id} ({member.display_name})")
 
     @Cog.listener()
-    async def on_subscription_declined(self, sub: str, user_id: int):
+    async def on_subscription_declined(self, user_id: int, sub: str):
         guild_id: int = self.bot.config.get_value("server_specific", "id")
         received_role_data: dict = self.bot.config.get_value("subscriptions", sub)
         received_role_id: int = received_role_data["role"]

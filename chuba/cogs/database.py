@@ -34,26 +34,46 @@ class DatabaseCog(Cog):
         log.info(f"Отменен промокод для пользователя {user_id}")
 
     @Cog.listener()
-    async def on_subscription_payed(self, subscription, days, user_id, amount, currency):
+    async def on_subscription_added(self, user_id: int, subscription: str, days: int):
         async with self.db.user(user_id) as user_model:
             match subscription:
                 case "SUB":
                     user_model.subscription = (user_model.subscription or date.today()) + timedelta(days=days)
                 case "VIP":
                     user_model.vip_subscription = (user_model.vip_subscription or date.today()) + timedelta(days=days)
-
-            log.info(f"{user_id} оплатил/получил подписку {subscription} на {days} дней в размере {amount} {currency}")
+        log.info(f"Выдана подписка {subscription}, {days} дней, пользователю {user_id}")
 
     @Cog.listener()
-    async def on_subscription_declined(self, subscription, user_id):
+    async def on_subscription_declined(self, user_id, subscription):
         async with self.db.user(user_id) as user_model:
             match subscription:
                 case "SUB":
                     user_model.subscription = None
                 case "VIP":
                     user_model.vip_subscription = None
+        log.info(f"Отменена подписка {subscription} для {user_id}")
 
-            log.info(f"Отменена подписка {subscription} для {user_id}")
+    @Cog.listener()
+    async def on_recurrent_applied(self, user_id: int, subscription_id: str):
+        """Оформление рекуррентного платежа
+
+        .. versionadded: 2.1
+
+        """
+        async with self.db.user(user_id) as user_model:
+            user_model.subscription_id = subscription_id
+        log.info(f"Оформлен рекуррентный платеж для {user_id}: {subscription_id}")
+
+    @Cog.listener()
+    async def on_recurrent_declined(self, user_id: int, _subscription_id: str):
+        """Отмена рекуррентного платежа
+
+        .. versionadded: 2.1
+
+        """
+        async with self.db.user(user_id) as user_model:
+            user_model.subscription_id = None
+        log.info(f"Отменен рекуррентный платеж для {user_id}")
 
     @loop(hours=24)
     async def check_expiried_subscriptions(self):

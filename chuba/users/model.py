@@ -16,6 +16,7 @@ class UserModel:
     subscription_raw: str | None = None
     vip_subscription_raw: str | None = None
     last_payment_id: str | None = None
+    subscription_id: str | None = None
 
     @property
     def subscription(self):
@@ -42,4 +43,5 @@ class UserModel:
                self.promo,\
                self.subscription_raw,\
                self.vip_subscription_raw,\
-               self.last_payment_id
+               self.last_payment_id, \
+               self.subscription_id

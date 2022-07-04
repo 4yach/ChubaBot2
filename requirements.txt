@@ -7,3 +7,4 @@ python-dateutil~=2.8.2
 aiocloudpayments~=0.0.9
 PyYAML~=6.0
 stackprinter~=0.2.6
+pydantic~=1.9.1
