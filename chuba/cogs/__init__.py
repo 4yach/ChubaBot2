@@ -11,6 +11,7 @@ from chuba.cogs.dcsetup import DCSetupCog
 from chuba.cogs.database import DatabaseCog
 from chuba.cogs.webhook import WebhookCog, WebhookStarterCog
 from chuba.cogs.anymoney import AnyMoneyCog
+from chuba.cogs.coingecko import CoinGeckoCog
 from chuba.cogs.cloudpayments import CloudPaymentsCog
 from chuba.cogs.donations_alert import DonationsAlertCog
 

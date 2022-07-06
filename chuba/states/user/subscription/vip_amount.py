@@ -41,7 +41,7 @@ class InputVipAmount(DiscordMessageState):
                         case "RUB":
                             min_value = Chuba.config.get_value("server_specific", "vipamount_rub")
                         case "USDT":
-                            min_value = Chuba.config.get_value("server_specific", "vipamount_usdt")
+                            min_value = Chuba.crypto_vip_amount
 
                     if value >= min_value:
                         data["Days"] = Chuba.config.get_value("server_specific", "vipsub_days")

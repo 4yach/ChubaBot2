@@ -1,5 +1,6 @@
-aiohttp==3.8.1
+aiohttp~=3.7.4.post0
 discord~=1.7.3
+discord.py~=1.7.3
 dateparser~=1.1.1
 typing~=3.7.4.3
 aiosqlite~=0.17.0
@@ -9,3 +10,4 @@ PyYAML~=6.0
 stackprinter~=0.2.6
 pydantic~=1.9.1
 discord-components==2.1.2
+aiocoingecko~=1.0.0

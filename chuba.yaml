@@ -13,6 +13,9 @@ server_specific:
     - 832857485223264286  # yach
     - 967023449291767818  # yach (второй аккаунт)
 
+  sub_usdt_rate: 2500
+  vip_usdt_rate: 2000
+
   vipsub_days: 30
 
   vipamount_rub: 2000
@@ -552,7 +555,7 @@ forms:
       custom_id: "user-plan-select"
       placeholder: Планы в рублях
       options:
-        - label: Подписка на месяц, 2500 рублей
+        - label: Подписка на месяц
           value: S30
           description: Подписка действует 30 дней (1 месяц)
     buttons:
@@ -568,7 +571,7 @@ forms:
       custom_id: "user-plan-select-crypto"
       placeholder: Планы в криптовалюте
       options:
-        - label: Подписка на месяц, 41$
+        - label: Подписка на месяц
           value: SC30
           description: Подписка действует 30 дней (1 месяц)
     buttons:
@@ -588,7 +591,7 @@ forms:
   PaymentConfirm:
     embed:
       title: Вы действительно хотите оплатить подписку?
-      description: Подтвердите оплату подписки
+      description: Подтвердите оплату подписки, на сумму {amount} {currency}?
     buttons:
       -
         - custom_id: "user-payment-confirm"

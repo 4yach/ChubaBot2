@@ -21,6 +21,17 @@ class PaymentConfirm(DiscordMessageState):
 
     form = PaymentConfirmForm()
 
+    async def setup(self, ctx: StateContext) -> None:
+        embed = self.form.embed
+
+        with ctx.data() as data:
+            embed.description = embed.description.format(
+                amount=data["Amount"], currency=data["Currency"])
+            await self.show(
+                ctx,
+                embed=embed,
+                components=self.form.component_layout)
+
     @button(custom_id=UserButtons.USER_PAYMENT_CONFIRM)
     async def payment_confirm(self, ctx: StateContext):
         with ctx.data() as data:

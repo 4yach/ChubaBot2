@@ -32,6 +32,8 @@ class ChubaBot(Bot):
 
     cp_client: CloudPayments
 
+    usdt_excrate: int
+
     state_machine: StateMachine
     """Ссылка на объект текущей машины состояний
     """
@@ -39,6 +41,14 @@ class ChubaBot(Bot):
     promo_storage: PromoStorage
     """Ссылка на объект текущей базы промокодов
     """
+
+    @property
+    def crypto_sub_amount(self) -> int:
+        return round(self.config.get_value("server_specific", "sub_usdt_rate") / self.usdt_excrate)
+
+    @property
+    def crypto_vip_amount(self) -> int:
+        return round(self.config.get_value("server_specific", "vip_usdt_rate") / self.usdt_excrate)
 
     async def on_error(self, event_method, *args, **kwargs):
         if event_method != "error_caught":

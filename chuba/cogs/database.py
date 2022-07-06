@@ -81,7 +81,7 @@ class DatabaseCog(Cog):
 
         for user_raw in await self.db.get_expiried_subscriptions():
             log.info(f"Подписка пользователя {user_raw[0]} просрочена")
-            self._bot.dispatch("subscription_declined", "SUB", user_raw[0])
+            self._bot.dispatch("subscription_declined", user_raw[0], "SUB")
 
     @loop(hours=24)
     async def check_expiried_vipsubscriptions(self):
@@ -89,4 +89,4 @@ class DatabaseCog(Cog):
 
         for user_raw in await self.db.get_expiried_vipsubscriptions():
             log.info(f"ВИП подписка пользователя {user_raw[0]} просрочена")
-            self._bot.dispatch("subscription_declined", "VIP", user_raw[0])
+            self._bot.dispatch("subscription_declined", user_raw[0], "VIP")

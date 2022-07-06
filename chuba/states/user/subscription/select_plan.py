@@ -72,9 +72,10 @@ class SelectSubscriptionPlan(DiscordMessageState):
             selected_plan = event.interaction.values[0]
             if Chuba.config.has_value("subplans", selected_plan):
                 plan = Chuba.config.get_value("subplans", selected_plan)
+                days = plan["days"]
                 with ctx.data() as data:
-                    data["Days"] = plan["days"]
-                    data["Amount"] = plan["amount"]
+                    data["Days"] = days
+                    data["Amount"] = Chuba.crypto_sub_amount * (days / 30)
                 await ctx.set("PaymentConfirm")
             else:
                 pass

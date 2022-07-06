@@ -18,6 +18,7 @@ from chuba.cogs import (
     DatabaseCog,
     WebhookCog,
     AnyMoneyCog,
+    CoinGeckoCog,
     CloudPaymentsCog,
     WebhookStarterCog,
     DonationsAlertCog)
@@ -116,6 +117,7 @@ if __name__ == '__main__':
 
     Chuba.add_cog(StartCog(Chuba))
     Chuba.add_cog(EventCog(Chuba))
+    Chuba.add_cog(CoinGeckoCog(Chuba))
     Chuba.add_cog(WebhookCog(Chuba))
     Chuba.add_cog(AnyMoneyCog(Chuba, namespace.am_api_key, namespace.am_merchant_id, namespace.am_callback_url))
     Chuba.add_cog(CloudPaymentsCog(Chuba, namespace.cp_public_id, namespace.cp_api_secret))
