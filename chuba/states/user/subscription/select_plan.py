@@ -75,7 +75,7 @@ class SelectSubscriptionPlan(DiscordMessageState):
                 days = plan["days"]
                 with ctx.data() as data:
                     data["Days"] = days
-                    data["Amount"] = Chuba.crypto_sub_amount * (days / 30)
+                    data["Amount"] = round(Chuba.crypto_sub_amount * (days / 30))
                 await ctx.set("PaymentConfirm")
             else:
                 pass
